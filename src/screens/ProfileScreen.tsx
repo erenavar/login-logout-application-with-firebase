@@ -1,12 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { FC } from 'react'
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/types';
 
-export default function ProfileScreen() {
+type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>;
+
+const ProfileScreen: FC<Props> = () => {
   return (
     <View>
       <Text>ProfileScreen</Text>
     </View>
   )
 }
+
+export default ProfileScreen;
 
 const styles = StyleSheet.create({})
