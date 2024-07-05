@@ -8,8 +8,9 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 const LoginScreen: FC<Props> = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <View>
+            <View style={styles.imageContainer}>
                 <Image
+                    style={styles.image}
                     source={require("../../assets/login-symbol.png")}
                 />
             </View>
@@ -22,5 +23,13 @@ export default LoginScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    imageContainer: {
+        flex: 1,
+        alignItems: "center"
+    },
+    image: {
+        height: 100,
+        width: 100
     }
 })
