@@ -1,14 +1,30 @@
-import { SafeAreaView, StyleSheet, Image, View, TextInput, Pressable, Text } from 'react-native'
+import { SafeAreaView, StyleSheet, Image, View, TextInput, Pressable, Text, ActivityIndicator } from 'react-native'
 import React, { FC, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
+import { createUserWithEmailAndPassword } from "firebase/auth"
 import { colors } from '../utils/colors';
+import { auth } from '../../firebaseConfig';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 const LoginScreen: FC<Props> = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
+    const [loading, setLoading] = useState(false)
+    const register = async () => {
+        setLoading(true)
+        try {
+
+            const response = await createUserWithEmailAndPassword(auth, email, password);
+            console.log('response :>> ', response);
+
+        } catch (error) {
+            console.log('error :>> ', error);
+        } finally {
+            setLoading(false)
+        }
+    }
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.imageContainer}>
@@ -18,16 +34,17 @@ const LoginScreen: FC<Props> = () => {
                 />
             </View>
             <View style={styles.inputContainer}>
-                <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder='E-Mail' />
+                <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder='E-Mail' autoCapitalize='none' />
                 <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder='Password' secureTextEntry />
                 <Pressable style={styles.btn}>
                     <Text style={styles.btnText}>Login</Text>
                 </Pressable>
-                <Pressable style={styles.btn}>
+                <Pressable style={styles.btn} onPress={register}>
                     <Text style={styles.btnText}>Sign Up</Text>
                 </Pressable>
 
             </View>
+            {loading && <ActivityIndicator />}
         </SafeAreaView>
     )
 }
