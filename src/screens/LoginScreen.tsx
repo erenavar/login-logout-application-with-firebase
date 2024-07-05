@@ -19,8 +19,13 @@ const LoginScreen: FC<Props> = () => {
             </View>
             <View style={styles.inputContainer}>
                 <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder='E-Mail' />
-                <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder='Password' />
-          
+                <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder='Password' secureTextEntry />
+                <Pressable style={styles.btn}>
+                    <Text style={styles.btnText}>Login</Text>
+                </Pressable>
+                <Pressable style={styles.btn}>
+                    <Text style={styles.btnText}>Sign Up</Text>
+                </Pressable>
 
             </View>
         </SafeAreaView>
@@ -50,5 +55,17 @@ const styles = StyleSheet.create({
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: colors.primaryColor,
         marginBottom: 20
+    },
+    btn: {
+        padding: 10,
+        backgroundColor: colors.primaryColor,
+        borderRadius: 10,
+        marginBottom: 20
+    },
+    btnText: {
+        textAlign: "center",
+        color: "white",
+        fontWeight: "bold",
+        fontSize: 18
     }
 })
