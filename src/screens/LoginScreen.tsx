@@ -2,22 +2,23 @@ import { SafeAreaView, StyleSheet, Image, View, TextInput, Pressable, Text, Acti
 import React, { FC, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 import { colors } from '../utils/colors';
 import { auth } from '../../firebaseConfig';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
-const LoginScreen: FC<Props> = () => {
+const LoginScreen: FC<Props> = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
     const register = async () => {
         setLoading(true)
         try {
-
             const response = await createUserWithEmailAndPassword(auth, email, password);
-            console.log('response :>> ', response);
+            if (response.user) {
+                navigation.navigate("Profile")
+            }
 
         } catch (error) {
             console.log('error :>> ', error);
@@ -25,6 +26,23 @@ const LoginScreen: FC<Props> = () => {
             setLoading(false)
         }
     }
+
+    
+    const login = async () => {
+        setLoading(true)
+        try {
+            const response = await signInWithEmailAndPassword(auth, email, password);
+            if (response.user) {
+                navigation.navigate("Profile")
+            }
+
+        } catch (error) {
+            console.log('error :>> ', error);
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.imageContainer}>
@@ -36,7 +54,7 @@ const LoginScreen: FC<Props> = () => {
             <View style={styles.inputContainer}>
                 <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder='E-Mail' autoCapitalize='none' />
                 <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder='Password' secureTextEntry />
-                <Pressable style={styles.btn}>
+                <Pressable style={styles.btn} onPress={login}>
                     <Text style={styles.btnText}>Login</Text>
                 </Pressable>
                 <Pressable style={styles.btn} onPress={register}>
