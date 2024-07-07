@@ -27,7 +27,7 @@ const LoginScreen: FC<Props> = ({ navigation }) => {
         }
     }
 
-    
+
     const login = async () => {
         setLoading(true)
         try {
@@ -48,7 +48,7 @@ const LoginScreen: FC<Props> = ({ navigation }) => {
             <View style={styles.imageContainer}>
                 <Image
                     style={styles.image}
-                    source={require("../../assets/login-symbol.png")}
+                    source={require("../../assets/icon.png")}
                 />
             </View>
             <View style={styles.inputContainer}>
