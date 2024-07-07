@@ -13,6 +13,8 @@ const SplashScreen: FC<Props> = ({ navigation }) => {
         onAuthStateChanged(auth, (user) => {
             if (user?.uid) {
                 navigation.navigate("Profile")
+            } else {
+                navigation.navigate("Login")
             }
         })
     }, [])

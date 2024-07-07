@@ -5,6 +5,7 @@ import { RootStackParamList } from '../navigation/types';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 import { colors } from '../utils/colors';
 import { auth } from '../../firebaseConfig';
+import Input from '../components/Input';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
@@ -52,8 +53,8 @@ const LoginScreen: FC<Props> = ({ navigation }) => {
                 />
             </View>
             <View style={styles.inputContainer}>
-                <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder='E-Mail' autoCapitalize='none' />
-                <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder='Password' secureTextEntry />
+                <Input value={email} onChangeText={setEmail} placeholder='E-Mail' autoCapitalize='none' />
+                <Input value={password} onChangeText={setPassword} placeholder='Password' secureTextEntry />
                 <Pressable style={styles.btn} onPress={login}>
                     <Text style={styles.btnText}>Login</Text>
                 </Pressable>
