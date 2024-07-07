@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "fire
 import { colors } from '../utils/colors';
 import { auth } from '../../firebaseConfig';
 import Input from '../components/Input';
+import Button from '../components/Button';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
@@ -58,9 +59,7 @@ const LoginScreen: FC<Props> = ({ navigation }) => {
                 <Pressable style={styles.btn} onPress={login}>
                     <Text style={styles.btnText}>Login</Text>
                 </Pressable>
-                <Pressable style={styles.btn} onPress={register}>
-                    <Text style={styles.btnText}>Sign Up</Text>
-                </Pressable>
+                <Button title='Sign Up' />
 
             </View>
             {loading && <ActivityIndicator />}
@@ -85,23 +84,5 @@ const styles = StyleSheet.create({
     inputContainer: {
         flex: 2,
         padding: 20
-    },
-    input: {
-        padding: 8,
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: colors.primaryColor,
-        marginBottom: 20
-    },
-    btn: {
-        padding: 10,
-        backgroundColor: colors.primaryColor,
-        borderRadius: 10,
-        marginBottom: 20
-    },
-    btnText: {
-        textAlign: "center",
-        color: "white",
-        fontWeight: "bold",
-        fontSize: 18
     }
 })
