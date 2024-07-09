@@ -56,10 +56,8 @@ const LoginScreen: FC<Props> = ({ navigation }) => {
             <View style={styles.inputContainer}>
                 <Input value={email} onChangeText={setEmail} placeholder='E-Mail' autoCapitalize='none' />
                 <Input value={password} onChangeText={setPassword} placeholder='Password' secureTextEntry />
-                <Pressable style={styles.btn} onPress={login}>
-                    <Text style={styles.btnText}>Login</Text>
-                </Pressable>
-                <Button title='Sign Up' />
+                <Button title='Login' onPress={login} />
+                <Button title='Sign Up' onPress={register} />
 
             </View>
             {loading && <ActivityIndicator />}
