@@ -7,6 +7,7 @@ import { colors } from '../utils/colors';
 import { auth } from '../../firebaseConfig';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import Spinner from '../components/Spinner';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
@@ -60,7 +61,8 @@ const LoginScreen: FC<Props> = ({ navigation }) => {
                 <Button title='Sign Up' onPress={register} />
 
             </View>
-            {loading && <ActivityIndicator />}
+
+            <Spinner visible={loading} />
         </SafeAreaView>
     )
 }

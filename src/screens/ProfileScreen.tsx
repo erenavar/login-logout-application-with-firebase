@@ -23,5 +23,9 @@ const ProfileScreen: FC<Props> = () => {
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 }
+  container: {
+    flex: 1,
+    padding: 20,
+
+  }
 })
