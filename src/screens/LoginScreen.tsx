@@ -11,8 +11,8 @@ import Button from '../components/Button';
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 const LoginScreen: FC<Props> = ({ navigation }) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("eren@eren.com");
+    const [password, setPassword] = useState("123456")
     const [loading, setLoading] = useState(false)
     const register = async () => {
         setLoading(true)

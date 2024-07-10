@@ -15,7 +15,7 @@ const ProfileScreen: FC<Props> = () => {
   return (
     <View style={styles.container}>
       <Text>ProfileScreen</Text>
-      <Button title='Log Out' onPress={logOut} />
+      <Button title='Log Out' onPress={logOut} backgroundColor="red" />
     </View>
   )
 }
