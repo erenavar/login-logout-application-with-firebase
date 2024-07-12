@@ -6,10 +6,7 @@ interface Props extends TextInputProps { };
 
 const Input: FC<Props> = (props) => {
     return (
-        <View>
-            <TextInput {...props} style={StyleSheet.flatten([styles.input, props.style])} />
-
-        </View>
+        <TextInput {...props} style={StyleSheet.flatten([styles.input, props.style])} selectTextOnFocus={true} />
     )
 }
 
