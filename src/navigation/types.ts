@@ -3,3 +3,9 @@ export type RootStackParamList = {
     Profile: undefined;
     Splash: undefined
 };
+
+export type TabParamList = {
+    Products: undefined,
+    Profile: undefined,
+    Cart: undefined
+}
