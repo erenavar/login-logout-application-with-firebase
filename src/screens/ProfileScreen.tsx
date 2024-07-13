@@ -1,12 +1,10 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { FC, useReducer, useRef, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 import Button from '../components/Button';
 import { getAuth, signOut, updateProfile } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
 import Input from '../components/Input';
-
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>;
 
@@ -14,9 +12,11 @@ const ProfileScreen: FC<Props> = () => {
   const logOut = () => {
     signOut(auth)
   }
+
   const auth = getAuth();
+
   const [displayName, setDisplayName] = useState(auth.currentUser?.displayName || "");
-  const [photoURL, setphotoURL] = useState(auth.currentUser?.photoURL || "")
+  const [photoURL, setPhotoURL] = useState(auth.currentUser?.photoURL || "")
 
 
 
@@ -24,14 +24,14 @@ const ProfileScreen: FC<Props> = () => {
 
     if (auth.currentUser) {
       try {
-        await updateProfile(auth.currentUser, {
-          displayName,
-          photoURL
+        const response = await updateProfile(auth.currentUser, {
+          displayName: displayName,
+          photoURL: photoURL
         })
+        console.log('response :>> ', response);
       } catch (error) {
         console.log('error :>> ', error);
       }
-
     }
   }
   const changeDisplayName = (value: string) => {
@@ -39,14 +39,17 @@ const ProfileScreen: FC<Props> = () => {
   }
 
   const changePhotoURL = (value: string) => {
-    setphotoURL(value)
+    setPhotoURL(value)
   }
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <Input value={auth.currentUser.email || ""} />
-        <Input value={displayName} onChangeText={text => setDisplayName(text)} />
-        <Input value={photoURL} onChangeText={text => setphotoURL(text)} autoCapitalize='none' />
+        {photoURL && <Image source={{ uri: photoURL }} style={styles.image} />}
+        <Input value={auth.currentUser.email || ""} editable={false} />
+        <Input value={displayName} onChangeText={(text) => changeDisplayName(text)} />
+        <Input value={photoURL} onChangeText={(text) => changePhotoURL(text)} autoCapitalize='none' />
+        <Input />
+
       </ScrollView>
       <Button title='Update' onPress={update} />
       <Button title='Log Out' onPress={logOut} backgroundColor="red" />
@@ -63,5 +66,12 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flexGrow: 1,
+  },
+  image: {
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    borderWidth: 5,
+    marginBottom: 10
   }
 })
