@@ -1,7 +1,7 @@
 import { Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { FC, useReducer, useRef, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/types';
+import { TabParamList } from '../navigation/types';
 import Button from '../components/Button';
 import { getAuth, signOut, updateProfile } from 'firebase/auth';
 import Input from '../components/Input';
