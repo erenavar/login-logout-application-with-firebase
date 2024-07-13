@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import { getAuth, signOut, updateProfile } from 'firebase/auth';
 import Input from '../components/Input';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>;
+type Props = NativeStackScreenProps<TabParamList, 'Profile'>;
 
 const ProfileScreen: FC<Props> = () => {
   const logOut = () => {

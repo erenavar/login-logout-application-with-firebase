@@ -12,7 +12,7 @@ const SplashScreen: FC<Props> = ({ navigation }) => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user?.uid) {
-                navigation.navigate("Profile")
+                navigation.navigate("TabNavigation", { screen: "Profile" })
             } else {
                 navigation.navigate("Login")
             }

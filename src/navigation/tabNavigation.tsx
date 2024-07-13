@@ -4,7 +4,7 @@ import { TabParamList } from './types';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-export default function tabNavigation() {
+export default function TabNavigation() {
     return (
         <Tab.Navigator>
             <Tab.Screen name="Profile" component={ProfileScreen}></Tab.Screen>
