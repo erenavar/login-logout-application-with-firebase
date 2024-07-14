@@ -16,6 +16,7 @@ export default function TabNavigation() {
                 )
             }} />
             <Tab.Screen name="Products" component={ProductsScreen} options={{
+                headerShown: false,
                 tabBarIcon: ({ focused, size, color }) => (
                     <Feather name="home" size={size} color={color} />
                 )
