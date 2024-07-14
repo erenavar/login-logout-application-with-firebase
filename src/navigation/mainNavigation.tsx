@@ -5,6 +5,7 @@ import LoginScreen from '../screens/LoginScreen';
 import { RootStackParamList } from './types';
 import SplashScreen from '../screens/SplashScreen';
 import TabNavigation from './tabNavigation';
+import AddProductScreen from '../screens/AddProductScreen';
 
 
 
@@ -16,6 +17,7 @@ function MainNavigation() {
             <Stack.Navigator>
                 <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+                <Stack.Screen name='AddProduct' component={AddProductScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="TabNavigation" component={TabNavigation} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>

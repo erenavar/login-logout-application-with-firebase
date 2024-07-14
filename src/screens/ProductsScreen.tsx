@@ -3,16 +3,18 @@ import React, { FC } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../utils/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { TabParamList } from '../navigation/types';
+import { RootStackParamList, TabParamList } from '../navigation/types';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 const HEADER_HEIGHT = Platform.OS == "ios" ? 44 : 56;
-type Props = BottomTabScreenProps<TabParamList, "Products">
+type Props = CompositeScreenProps<BottomTabScreenProps<TabParamList, "Profile">, NativeStackScreenProps<RootStackParamList>>
 
 const ProductsScreen: FC<Props> = ({ navigation }) => {
     const insets = useSafeAreaInsets();
     const navigateToAddProduct = () => {
-
+        navigation.navigate("AddProduct")
     }
     return (
         <View style={styles.container}>

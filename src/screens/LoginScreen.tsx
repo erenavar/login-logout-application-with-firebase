@@ -1,15 +1,17 @@
 import { SafeAreaView, StyleSheet, Image, View, TextInput, Pressable, Text, ActivityIndicator } from 'react-native'
 import React, { FC, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/types';
+import { RootStackParamList, TabParamList } from '../navigation/types';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 import { colors } from '../utils/colors';
 import { auth } from '../../firebaseConfig';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Spinner from '../components/Spinner';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+type Props = CompositeScreenProps<BottomTabScreenProps<TabParamList, "Profile">, NativeStackScreenProps<RootStackParamList>>
 
 const LoginScreen: FC<Props> = ({ navigation }) => {
     const [email, setEmail] = useState("eren@eren.com");
