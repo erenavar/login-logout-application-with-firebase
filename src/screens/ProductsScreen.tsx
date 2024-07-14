@@ -1,15 +1,19 @@
 import { Platform, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React from 'react';
+import React, { FC } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../utils/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-
+import { TabParamList } from '../navigation/types';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 const HEADER_HEIGHT = Platform.OS == "ios" ? 44 : 56;
+type Props = BottomTabScreenProps<TabParamList, "Products">
 
-const ProductsScreen = () => {
+const ProductsScreen: FC<Props> = ({ navigation }) => {
     const insets = useSafeAreaInsets();
+    const navigateToAddProduct = () => {
+
+    }
     return (
         <View style={styles.container}>
             <View style={[styles.headerWrapper, { height: insets.top + HEADER_HEIGHT, paddingTop: insets.top }]}>
@@ -17,7 +21,7 @@ const ProductsScreen = () => {
                 <View style={styles.headerContainer}>
                     <Text style={styles.headerText}>Products</Text>
                 </View>
-                <Pressable style={styles.headerEdge}>
+                <Pressable style={styles.headerEdge} onPress={navigateToAddProduct}>
                     <Feather name="plus" size={24} color={colors.primaryColor} />
                 </Pressable>
             </View>
