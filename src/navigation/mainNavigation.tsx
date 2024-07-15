@@ -15,6 +15,7 @@ function MainNavigation() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
+                <Stack.Screen name="Add" component={AddProductScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
                 <Stack.Screen name='AddProduct' component={AddProductScreen} options={{ headerShown: false }} />
