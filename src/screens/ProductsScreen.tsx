@@ -1,5 +1,5 @@
 import { Platform, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React, { FC } from 'react';
+import React, { createFactory, FC, useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../utils/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -7,6 +7,8 @@ import { RootStackParamList, TabParamList } from '../navigation/types';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebaseConfig';
 
 const HEADER_HEIGHT = Platform.OS == "ios" ? 44 : 56;
 type Props = CompositeScreenProps<BottomTabScreenProps<TabParamList, "Profile">, NativeStackScreenProps<RootStackParamList>>
@@ -16,6 +18,19 @@ const ProductsScreen: FC<Props> = ({ navigation }) => {
     const navigateToAddProduct = () => {
         navigation.navigate("AddProduct")
     }
+    useEffect(() => {
+        readData();
+    }, [])
+
+    const readData = async () => {
+        try {
+            const products = []
+            const response = await getDocs(collection(db, "products"))
+        } catch (error) {
+
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={[styles.headerWrapper, { height: insets.top + HEADER_HEIGHT, paddingTop: insets.top }]}>

@@ -1,12 +1,21 @@
 import { SafeAreaView, StyleSheet, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import Input from '../components/Input'
 import Button from '../components/Button'
 import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
 import Spinner from '../components/Spinner'
+import { CompositeScreenProps } from '@react-navigation/native'
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
+import { RootStackParamList, TabParamList } from '../navigation/types'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
-const AddProductScreen = () => {
+type Props = CompositeScreenProps<
+    NativeStackScreenProps<RootStackParamList, "AddProduct">,
+    BottomTabScreenProps<TabParamList>>
+
+
+const AddProductScreen: FC<Props> = ({ navigation }) => {
     const [state, setState] = useState({
         title: "",
         description: "",
@@ -24,7 +33,9 @@ const AddProductScreen = () => {
                 image: state.image,
                 price: parseInt(state.price)
             })
-            console.log('Document written with ID: ', docRef.id);
+            if (docRef.id) {
+                navigation.goBack();
+            }
         } catch (e) {
             console.log('Error adding document: ', e)
         } finally {
