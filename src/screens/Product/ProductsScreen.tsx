@@ -1,4 +1,4 @@
-import { Platform, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, Platform, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { FC, useEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../../utils/colors';
@@ -10,6 +10,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import { IProduct } from './types';
+import { renderProduct } from './productListItem';
 
 const HEADER_HEIGHT = Platform.OS == "ios" ? 44 : 56;
 type Props = CompositeScreenProps<BottomTabScreenProps<TabParamList, "Profile">, NativeStackScreenProps<RootStackParamList>>
@@ -26,7 +27,6 @@ const ProductsScreen: FC<Props> = ({ navigation }) => {
             readData();
         }
     }, [])
-
 
     const readData = async () => {
         try {
@@ -54,7 +54,12 @@ const ProductsScreen: FC<Props> = ({ navigation }) => {
                 </Pressable>
             </View>
             <View style={styles.content}>
-                {data.length > 0 && data.map((product) => (<Text key={product.id}>{product.title}</Text>))}
+                <FlatList
+                    data={data}
+                    numColumns={2}
+                    renderItem={({ item }) => renderProduct(item)}
+                    keyExtractor={item => item.id}
+                />
             </View>
         </View>
     )
