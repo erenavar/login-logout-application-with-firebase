@@ -1,39 +1,42 @@
 import { Platform, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React, { createFactory, FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
-import { colors } from '../utils/colors';
+import { colors } from '../../utils/colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { RootStackParamList, TabParamList } from '../navigation/types';
+import { RootStackParamList, TabParamList } from '../../navigation/types';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps } from '@react-navigation/native';
+import { CompositeScreenProps, useIsFocused } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../firebaseConfig';
+import { db } from '../../../firebaseConfig';
+import { IProduct } from './types';
 
 const HEADER_HEIGHT = Platform.OS == "ios" ? 44 : 56;
 type Props = CompositeScreenProps<BottomTabScreenProps<TabParamList, "Profile">, NativeStackScreenProps<RootStackParamList>>
 
 const ProductsScreen: FC<Props> = ({ navigation }) => {
     const insets = useSafeAreaInsets();
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<IProduct[]>([]);
+    const isFocused = useIsFocused();
     const navigateToAddProduct = () => {
         navigation.navigate("AddProduct")
     }
     useEffect(() => {
-        console.log('object :>> ', "deneme");
-        readData();
+        if (isFocused) {
+            readData();
+        }
     }, [])
+
 
     const readData = async () => {
         try {
-            const products = [];
+            const products: IProduct[] = [];
             const response = await getDocs(collection(db, "products"));
             response.forEach((product) => {
-                console.log('product.dat() :>> ', product.data());
-                products.push(product.data());
+                console.log('product.data() :>> ', product.data());
+                products.push({ ...product.data() as IProduct, id: product.id });
             });
             setData(products);
-
         } catch (error) {
             console.log('error :>> ', error);
         }
@@ -51,6 +54,7 @@ const ProductsScreen: FC<Props> = ({ navigation }) => {
                 </Pressable>
             </View>
             <View style={styles.content}>
+                {data.length > 0 && data.map((product) => (<Text key={product.id}>{product.title}</Text>))}
             </View>
         </View>
     )

@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ProfileScreen from '../screens/ProfileScreen';
 import { TabParamList } from './types';
 import { Feather } from '@expo/vector-icons';
-import ProductsScreen from '../screens/ProductsScreen';
+import ProductsScreen from '../screens/Product/ProductsScreen';
 import CartScreen from '../screens/CartScreen';
 
 const Tab = createBottomTabNavigator<TabParamList>();
