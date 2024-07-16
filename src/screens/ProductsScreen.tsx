@@ -15,19 +15,27 @@ type Props = CompositeScreenProps<BottomTabScreenProps<TabParamList, "Profile">,
 
 const ProductsScreen: FC<Props> = ({ navigation }) => {
     const insets = useSafeAreaInsets();
+    const [data, setData] = useState([]);
     const navigateToAddProduct = () => {
         navigation.navigate("AddProduct")
     }
     useEffect(() => {
+        console.log('object :>> ', "deneme");
         readData();
     }, [])
 
     const readData = async () => {
         try {
-            const products = []
-            const response = await getDocs(collection(db, "products"))
-        } catch (error) {
+            const products = [];
+            const response = await getDocs(collection(db, "products"));
+            response.forEach((product) => {
+                console.log('product.dat() :>> ', product.data());
+                products.push(product.data());
+            });
+            setData(products);
 
+        } catch (error) {
+            console.log('error :>> ', error);
         }
     }
 
