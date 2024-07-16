@@ -7,7 +7,7 @@ const renderProduct = (item: IProduct) => {
     return (
         <View style={styles.container}>
             <Image source={{ uri: item.imageURL }} style={styles.image} />
-            <Text>{item.title}</Text>
+            <Text style={styles.titleText}>{item.title}</Text>
             <Text>${item.price}</Text>
         </View>
     )
@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
         margin: 8,
         width: itemWidth,
         maxWidth: itemWidth,
+    },
+    titleText: {
+        fontWeight: 600,
+        paddingVertical: 8
     },
     image: { height: itemWidth, width: itemWidth }
 })
