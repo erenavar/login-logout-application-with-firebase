@@ -1,19 +1,32 @@
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native"
+import { Dimensions, Image, Pressable, StyleSheet, Text, View } from "react-native"
 import { IProduct } from "./types"
+import { CompositeScreenProps, useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList, TabParamList } from "../../navigation/types";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
 
 const { width } = Dimensions.get("window");
-const renderProduct = (item: IProduct) => {
+
+type ProductDetailNavigationType = CompositeScreenProps<BottomTabScreenProps<TabParamList, "Products">, NativeStackScreenProps<RootStackParamList>>
+
+const RenderProduct = ({ item }: { item: IProduct }) => {
+
+    const navigation = useNavigation<ProductDetailNavigationType["navigation"]>();
+    const toProductDetail = () => {
+        navigation.navigate("ProductDetail")
+    }
+
     return (
-        <View style={styles.container}>
+        <Pressable style={styles.container} onPress={toProductDetail}>
             <Image source={{ uri: item.imageURL }} style={styles.image} />
             <Text style={styles.titleText}>{item.title}</Text>
             <Text>${item.price}</Text>
-        </View>
+        </Pressable>
     )
 }
 
-export { renderProduct };
+export { RenderProduct };
 const itemWidth = width / 2 - 16;
 
 const styles = StyleSheet.create({

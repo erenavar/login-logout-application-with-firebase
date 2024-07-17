@@ -1,4 +1,4 @@
-import { FlatList, Image, Platform, Pressable, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Platform, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { FC, useEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { colors } from '../../utils/colors';
@@ -10,7 +10,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import { IProduct } from './types';
-import { renderProduct } from './productListItem';
+import { RenderProduct } from './productListItem';
 
 const HEADER_HEIGHT = Platform.OS == "ios" ? 44 : 56;
 type Props = CompositeScreenProps<BottomTabScreenProps<TabParamList, "Profile">, NativeStackScreenProps<RootStackParamList>>
@@ -42,6 +42,10 @@ const ProductsScreen: FC<Props> = ({ navigation }) => {
         }
     }
 
+    const toProductDetail = () => {
+
+    }
+
     return (
         <View style={styles.container}>
             <View style={[styles.headerWrapper, { height: insets.top + HEADER_HEIGHT, paddingTop: insets.top }]}>
@@ -57,7 +61,7 @@ const ProductsScreen: FC<Props> = ({ navigation }) => {
                 <FlatList
                     data={data}
                     numColumns={2}
-                    renderItem={({ item }) => renderProduct(item)}
+                    renderItem={({ item }) => <RenderProduct item={item} />}
                     keyExtractor={item => item.id}
                 />
             </View>
