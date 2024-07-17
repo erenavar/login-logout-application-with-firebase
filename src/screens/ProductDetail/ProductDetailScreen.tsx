@@ -1,10 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { FC } from 'react'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { RootStackParamList } from '../../navigation/types'
 
-const ProductDetailScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList,"ProductDetail">
+
+const ProductDetailScreen: FC<Props> = ({route}) => {
+    const {id} = route.params;
     return (
         <View>
-            <Text>ProductDetailScreen</Text>
+            <Text>{id}</Text>
         </View>
     )
 }

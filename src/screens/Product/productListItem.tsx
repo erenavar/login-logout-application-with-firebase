@@ -14,7 +14,7 @@ const RenderProduct = ({ item }: { item: IProduct }) => {
 
     const navigation = useNavigation<ProductDetailNavigationType["navigation"]>();
     const toProductDetail = () => {
-        navigation.navigate("ProductDetail")
+        navigation.navigate("ProductDetail",{id:item.id})
     }
 
     return (
