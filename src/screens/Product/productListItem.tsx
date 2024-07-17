@@ -4,9 +4,7 @@ import { CompositeScreenProps, useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList, TabParamList } from "../../navigation/types";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-
-
-const { width } = Dimensions.get("window");
+import { width } from "../../utils/constants";
 
 type ProductDetailNavigationType = CompositeScreenProps<BottomTabScreenProps<TabParamList, "Products">, NativeStackScreenProps<RootStackParamList>>
 
