@@ -49,7 +49,6 @@ const ProfileScreen: FC<Props> = () => {
         <Input value={displayName} onChangeText={(text) => changeDisplayName(text)} />
         <Input value={photoURL} onChangeText={(text) => changePhotoURL(text)} autoCapitalize='none' />
         <Input />
-
       </ScrollView>
       <Button title='Update' onPress={update} />
       <Button title='Log Out' onPress={logOut} backgroundColor="red" />

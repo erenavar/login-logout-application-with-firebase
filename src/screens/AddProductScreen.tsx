@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React, { FC, useState } from 'react'
 import Input from '../components/Input'
 import Button from '../components/Button'
@@ -46,12 +46,14 @@ const AddProductScreen: FC<Props> = ({ navigation }) => {
     }
     return (
         <SafeAreaView style={styles.container}>
+    
             <View style={styles.inputWrapper}>
                 <Input value={state.title} placeholder='Title' onChangeText={(text) => setState((prevState) => ({ ...prevState, title: text }))} keyboardType="default" />
                 <Input value={state.description} placeholder='Description' onChangeText={(text) => setState((prevState) => ({ ...prevState, description: text }))} />
                 <Input value={state.image} placeholder='Image' onChangeText={(text) => setState((prevState) => ({ ...prevState, image: text }))} />
-                <Input value={state.price} placeholder='Price' onChangeText={(text) => setState((prevState) => ({ ...prevState, price: text }))} keyboardType="number-pad" />
-                <Button onPress={save} title='Save'></Button>
+                <Input  value={state.price} placeholder='Price' onChangeText={(text) => setState((prevState) => ({ ...prevState, price: text }))} keyboardType="number-pad" />
+          
+                 <Button onPress={save} title='Save'></Button>
             </View>
             <Spinner visible={state.loader} />
         </SafeAreaView>
