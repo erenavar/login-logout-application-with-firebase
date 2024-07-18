@@ -70,6 +70,7 @@ const AddProductScreen: FC<Props> = ({ navigation, route }) => {
   };
 
   const update = async () => {
+    setState((prevState) => ({ ...prevState, loader: true }));
     try {
       const updateRef = doc(db, "products", id!);
       await updateDoc(updateRef, {
@@ -78,6 +79,7 @@ const AddProductScreen: FC<Props> = ({ navigation, route }) => {
         image: state.image,
         price: state.price,
       });
+      setState((prevState) => ({ ...prevState, loader: false }));
       navigation.goBack();
     } catch (error) {
       console.log("deneme :>> ", error);
