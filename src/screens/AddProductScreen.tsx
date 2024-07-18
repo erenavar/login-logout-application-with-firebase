@@ -1,8 +1,8 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import React, { FC, useEffect, useState } from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import Spinner from "../components/Spinner";
 import { CompositeScreenProps } from "@react-navigation/native";
@@ -21,7 +21,7 @@ const AddProductScreen: FC<Props> = ({ navigation, route }) => {
   const [state, setState] = useState({
     title: "",
     description: "",
-    imageURL: "",
+    image: "",
     price: "",
     loader: false,
   });
@@ -36,11 +36,10 @@ const AddProductScreen: FC<Props> = ({ navigation, route }) => {
         const response = await getDoc(doc(db, "products", id));
         if (response.exists) {
           const data = response.data() as IProduct;
-
           setState({
             title: data.title,
             price: data.price.toString(),
-            imageURL: data.imageURL,
+            image: data.image,
             description: data.description,
             loader: false,
           });
@@ -57,7 +56,7 @@ const AddProductScreen: FC<Props> = ({ navigation, route }) => {
       const docRef = await addDoc(collection(db, "products"), {
         title: state.title,
         description: state.description,
-        image: state.imageURL,
+        image: state.image,
         price: parseInt(state.price),
       });
       if (docRef.id) {
@@ -67,6 +66,21 @@ const AddProductScreen: FC<Props> = ({ navigation, route }) => {
       console.log("Error adding document: ", e);
     } finally {
       setState((prevState) => ({ ...prevState, loader: false }));
+    }
+  };
+
+  const update = async () => {
+    try {
+      const updateRef = doc(db, "products", id!);
+      await updateDoc(updateRef, {
+        title: state.title,
+        description: state.description,
+        image: state.image,
+        price: state.price,
+      });
+      navigation.goBack();
+    } catch (error) {
+      console.log("deneme :>> ", error);
     }
   };
   return (
@@ -104,6 +118,7 @@ const AddProductScreen: FC<Props> = ({ navigation, route }) => {
         />
 
         <Button onPress={save} title="Save"></Button>
+        <Button onPress={update} title="Update"></Button>
       </View>
       <Spinner visible={state.loader} />
     </SafeAreaView>
