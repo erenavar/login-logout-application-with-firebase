@@ -24,14 +24,10 @@ const RenderProduct = ({
   const navigation = useNavigation<ProductDetailNavigationType["navigation"]>();
   const toProductDetail = () => {
     navigation.navigate("ProductDetail", { id: item.id });
-    
   };
 
   const updateItem = () => {
-    try {
-    } catch (error) {
-      console.log("Update Error: ", error);
-    }
+    navigation.navigate("AddProduct", { id: item.id });
   };
 
   return (
@@ -41,7 +37,7 @@ const RenderProduct = ({
       <Text style={{ fontSize: 15 }}>${item.price}</Text>
       <View style={styles.itemButtons}>
         <Button title="Delete" onPress={() => onDelete(item.id)}></Button>
-        <Button title="Update" onPress={updateItem}></Button>
+        <Button title="Update" onPress={() => updateItem()}></Button>
       </View>
     </Pressable>
   );

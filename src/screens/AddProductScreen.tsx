@@ -1,35 +1,63 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import Spinner from "../components/Spinner";
 import { CompositeScreenProps } from "@react-navigation/native";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { RootStackParamList, TabParamList } from "../navigation/types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { IProduct } from "./Product/types";
 
 type Props = CompositeScreenProps<
   NativeStackScreenProps<RootStackParamList, "AddProduct">,
   BottomTabScreenProps<TabParamList>
 >;
 
-const AddProductScreen: FC<Props> = ({ navigation }) => {
+const AddProductScreen: FC<Props> = ({ navigation, route }) => {
+  const id = route.params?.id;
   const [state, setState] = useState({
     title: "",
     description: "",
-    image: "",
+    imageURL: "",
     price: "",
     loader: false,
   });
+
+  useEffect(() => {
+    getProduct();
+  }, []);
+
+  const getProduct = async () => {
+    if (id) {
+      try {
+        const response = await getDoc(doc(db, "products", id));
+        if (response.exists) {
+          const data = response.data() as IProduct;
+
+          setState({
+            title: data.title,
+            price: data.price.toString(),
+            imageURL: data.imageURL,
+            description: data.description,
+            loader: false,
+          });
+        }
+      } catch (error) {
+        console.log("error :>> ", error);
+      }
+    }
+  };
+
   const save = async () => {
     try {
       setState((prevState) => ({ ...prevState, loader: true }));
       const docRef = await addDoc(collection(db, "products"), {
         title: state.title,
         description: state.description,
-        image: state.image,
+        image: state.imageURL,
         price: parseInt(state.price),
       });
       if (docRef.id) {
