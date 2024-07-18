@@ -33,31 +33,36 @@ const ProductsScreen: FC<Props> = ({ navigation }) => {
       const products: IProduct[] = [];
       const response = await getDocs(collection(db, "products"));
       response.forEach((product) => {
-        console.log("product.data() :>> ", product.data());
         products.push({ ...(product.data() as IProduct), id: product.id });
       });
       setData(products);
     } catch (error) {
-      console.log("error :>> ", error);
+      console.log("Error on read data :>> ", error);
     }
   };
 
   const filterPrice = async (min: number, max: number) => {
-    const q = query(
-      collection(db, "products"),
-      where("price", "<=", max),
-      where("price", ">=", min)
-    );
-    const response = await getDocs(q);
+    try {
+      const q = query(
+        collection(db, "products"),
+        where("price", ">=", min),
+        where("price", "<=", max)
+      );
+      const filterProducts: IProduct[] = [];
+      const response = await getDocs(q);
+      response.forEach((item) => {
+        filterProducts.push({ ...(item.data() as IProduct), id: item.id });
+      });
+      setData(filterProducts);
+    } catch (error) {
+      console.log("Error on filter query :>> ", error);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Header onPressRight={toAddProduct} />
-      <Button
-        title="1000-1500"
-        onPress={() => filterPrice(1000, 1500)}
-      ></Button>
+      <Button title="200-500" onPress={() => filterPrice(200, 500)}></Button>
       <View style={styles.content}>
         <FlatList
           data={data}
