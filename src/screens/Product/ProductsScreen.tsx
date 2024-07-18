@@ -4,7 +4,14 @@ import { RootStackParamList, TabParamList } from "../../navigation/types";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps, useIsFocused } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { IProduct } from "./types";
 import { RenderProduct } from "./productListItem";
@@ -26,7 +33,7 @@ const ProductsScreen: FC<Props> = ({ navigation }) => {
     if (isFocused) {
       readData();
     }
-  }, []);
+  }, [isFocused]);
 
   const readData = async () => {
     try {
@@ -59,15 +66,32 @@ const ProductsScreen: FC<Props> = ({ navigation }) => {
     }
   };
 
+  const deleteItem = async (id: string) => {
+    try {
+      await deleteDoc(doc(db, "products", id));
+      readData();
+    } catch (error) {
+      console.log("Delete Error: ", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header onPressRight={toAddProduct} />
-      <Button title="200-500" onPress={() => filterPrice(200, 500)}></Button>
+      <Button
+        title="$200 - $500"
+        onPress={() => filterPrice(200, 500)}
+      ></Button>
       <View style={styles.content}>
         <FlatList
           data={data}
           numColumns={2}
-          renderItem={({ item }) => <RenderProduct item={item} />}
+          renderItem={({ item }) => (
+            <RenderProduct
+              item={item}
+              onDelete={(id: string) => deleteItem(id)}
+            />
+          )}
           keyExtractor={(item) => item.id}
         />
       </View>
