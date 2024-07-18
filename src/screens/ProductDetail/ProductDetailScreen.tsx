@@ -11,7 +11,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "ProductDetail">;
 
 const ProductDetailScreen: FC<Props> = ({ route }) => {
   const { id } = route.params;
-  const [product, setProduct] = useState<IProduct>()
+  const [product, setProduct] = useState<IProduct>();
   useEffect(() => {
     getProductDetails();
   }, []);
@@ -19,16 +19,16 @@ const ProductDetailScreen: FC<Props> = ({ route }) => {
   const getProductDetails = async () => {
     try {
       const response = await getDoc(doc(db, "products", id));
-      if(response.exists){
-        setProduct(response.data() as IProduct)
+      if (response.exists) {
+        setProduct(response.data() as IProduct);
       }
     } catch (error) {
-        console.log('error :>> ', error);
+      console.log("error :>> ", error);
     }
   };
   return (
     <View style={styles.container}>
-      <Image source={{uri: product?.imageURL}} style={styles.image}/>
+      <Image source={{ uri: product?.imageURL }} style={styles.image} />
       <Text>{product?.title}</Text>
       <Text>{product?.price}</Text>
       <Text>{product?.description}</Text>
@@ -39,11 +39,11 @@ const ProductDetailScreen: FC<Props> = ({ route }) => {
 export default ProductDetailScreen;
 
 const styles = StyleSheet.create({
-    container : {
-        flex:1
-    },
-    image:{
-        height:width,
-        width:width
-    }
+  container: {
+    flex: 1,
+  },
+  image: {
+    height: width,
+    width: width,
+  },
 });
